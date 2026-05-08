@@ -25,6 +25,8 @@
   // Directory handle for File System Access API. Per-tab; not persisted across reloads
   // (the API doesn't expose handles across reloads without IndexedDB indirection).
   let dirHandle = null;
+  let swapHandlerBound = false;
+
 
   function isEditUrl() {
     return location.hash === '#edit' || location.search.indexOf('edit=1') !== -1;
@@ -150,9 +152,12 @@
     // Step 3: ONE event-delegation handler at the stage level. Clicking anywhere inside
     // an .img-swap subtree resolves to its nearest .img-swap ancestor and triggers the
     // file picker. Robust across browsers, survives DOM changes from contenteditable typing.
-    const stage = document.querySelector('.mockup-stage');
-    if (!stage || stage.dataset.swapBound) return;
-    stage.dataset.swapBound = '1';
+const stage = document.querySelector('.mockup-stage');
+    if (!stage) return;
+    // Self-heal: clear any legacy data-swap-bound attribute that older saves baked in.
+    if (stage.hasAttribute('data-swap-bound')) stage.removeAttribute('data-swap-bound');
+    if (swapHandlerBound) return;
+    swapHandlerBound = true;
     stage.addEventListener('click', function (e) {
       const target = e.target.closest('.img-swap');
       if (!target) return;
@@ -160,7 +165,7 @@
       e.preventDefault();
       e.stopPropagation();
       triggerImageUpload(target);
-    }, true);  // capture phase — intercepts before any contenteditable focus handling
+    }, true);
   }
 
   function triggerImageUpload(target) {
@@ -218,7 +223,8 @@
     // Note: we KEEP the .img-swap classes (they're structural markers in the source),
     // KEEP <script src="editor.js"></script> (the saved file still loads the editor),
     // KEEP <link rel="stylesheet" href="styles.css"> (don't inline — file is part of a deck).
-
+    const stageClone = clone.querySelector('.mockup-stage');
+    if (stageClone) stageClone.removeAttribute('data-swap-bound');
     return '<!DOCTYPE html>\n' + clone.outerHTML;
   }
 
