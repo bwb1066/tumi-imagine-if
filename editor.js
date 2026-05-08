@@ -170,11 +170,20 @@
       const f = input.files[0]; if (!f) return;
       const r = new FileReader();
       r.onload = function (ev) {
+        const dataUrl = ev.target.result;
         if (target.tagName === 'IMG') {
-          target.src = ev.target.result;
+          target.src = dataUrl;
         } else {
-          // Replace the placeholder SVG/content with the chosen image as a background
-          target.style.backgroundImage = 'url("' + ev.target.result + '")';
+          // Clear any placeholder content (SVG silhouettes, gradient overlays with text
+          // labels like the McLaren / Disney100 / 50 YEARS tiles, etc.). Without this,
+          // those children render ON TOP of the new background image and the user sees
+          // both — the bug originally shipped in v1.
+          target.innerHTML = '';
+          // Some placeholders set the gradient via inline `style="background: ..."`
+          // shorthand. Reset the shorthand before applying the image so background-color
+          // and other sub-properties don't fight the new image.
+          target.style.background = '';
+          target.style.backgroundImage = 'url("' + dataUrl + '")';
           target.style.backgroundSize = 'cover';
           target.style.backgroundPosition = 'center';
         }
