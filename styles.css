@@ -24,8 +24,8 @@
 
   /* Typography stack — clean editorial sans approximating Tumi's mark.
      System-first so it looks correct without webfont licensing. */
-  --font-display: "Inter Tight", "Helvetica Neue", "Arial", system-ui, sans-serif;
-  --font-body:    "Inter", "Helvetica Neue", "Arial", system-ui, sans-serif;
+  --font-display: "proxima-nova", "Helvetica Neue", "Arial", system-ui, sans-serif;
+  --font-body:    "proxima-nova", "Helvetica Neue", "Arial", system-ui, sans-serif;
 
   /* Editorial sizing scale */
   --shadow-soft: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
@@ -51,7 +51,7 @@ html, body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; height: auto; display: block; }
 
-::selection { background: var(--tumi-orange); color: #fff; }
+::selection { background: var(--tumi-black); color: #fff; }
 
 /* ============================================================
    STAGE / FRAME — wraps every mockup like a presentation slide
@@ -98,10 +98,9 @@ img { max-width: 100%; height: auto; display: block; }
 }
 
 .tumi-logo {
-  font-family: var(--font-display);
-  font-size: 22px; font-weight: 800;
-  letter-spacing: 4px;
-  color: var(--tumi-black);
+  display: block;
+  height: 22px;
+  width: auto;
   margin-right: 56px;
 }
 
@@ -124,7 +123,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .tumi-nav-items a.active::after {
   content: ""; position: absolute; bottom: -4px; left: 0; right: 0;
-  height: 2px; background: var(--tumi-orange);
+  height: 2px; background: var(--tumi-black);
 }
 
 .tumi-account {
@@ -151,7 +150,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .porter-tag::before {
   content: ""; width: 8px; height: 8px;
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
   display: inline-block;
 }
 .porter-tag.on-dark { color: #fff; }
@@ -165,7 +164,7 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .ask-porter::before {
   content: ""; width: 8px; height: 8px;
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
 }
 
 .porter-ahead {
@@ -219,7 +218,7 @@ img { max-width: 100%; height: auto; display: block; }
   width: 22px; height: 22px;
   flex-shrink: 0;
   display: inline-flex; align-items: center; justify-content: center;
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
   color: #fff;
   font-weight: 700; font-size: 14px;
   margin-right: 14px;
@@ -259,7 +258,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 5px 10px;
   z-index: 2;
 }
-.product-card .badge.orange { background: var(--tumi-orange); }
+.product-card .badge.orange { background: var(--tumi-black); }
 .product-card .badge.outline {
   background: #fff; color: var(--tumi-black);
   border: 1px solid var(--tumi-black);
@@ -278,7 +277,7 @@ img { max-width: 100%; height: auto; display: block; }
 .product-line {
   font-size: 11px; font-weight: 600;
   letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   margin-bottom: 6px;
 }
 .product-name {
@@ -325,7 +324,7 @@ img { max-width: 100%; height: auto; display: block; }
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
-.btn:hover { background: var(--tumi-orange); border-color: var(--tumi-orange); }
+.btn:hover { background: var(--tumi-black-pure); border-color: var(--tumi-black-pure); }
 
 .btn-outline {
   background: #fff;
@@ -333,8 +332,8 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .btn-outline:hover { background: var(--tumi-black); color: #fff; }
 
-.btn-orange { background: var(--tumi-orange); border-color: var(--tumi-orange); }
-.btn-orange:hover { background: var(--tumi-orange-hover); border-color: var(--tumi-orange-hover); }
+.btn-orange { background: var(--tumi-black); border-color: var(--tumi-black); }
+.btn-orange:hover { background: var(--tumi-black-pure); border-color: var(--tumi-black-pure); }
 
 .btn-ghost {
   background: transparent;
@@ -363,7 +362,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .porter-card {
   background: #faf6f1;
-  border-left: 3px solid var(--tumi-orange);
+  border-left: 3px solid var(--tumi-black);
   padding: 22px 26px;
   margin: 24px 32px;
   font-size: 14px;
@@ -473,7 +472,7 @@ hr.rule {
 }
 .timeline-step.done .dot { background: var(--tumi-black); }
 .timeline-step.now .dot {
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
   width: 18px; height: 18px;
   margin-top: 24px;
 }
@@ -519,7 +518,7 @@ hr.rule {
 .drop-body .when {
   font-size: 11px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   margin-bottom: 6px;
 }
 .drop-body h3 {
@@ -718,7 +717,7 @@ hr.rule {
   content: ""; position: absolute;
   top: 0; right: 0; bottom: 0;
   width: 6px;
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
 }
 .corp-hero h1 {
   font-family: var(--font-display);
@@ -745,7 +744,7 @@ hr.rule {
 .corp-step .num {
   font-family: var(--font-display);
   font-size: 36px; font-weight: 700;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   line-height: 1;
   margin-bottom: 12px;
 }
@@ -786,7 +785,7 @@ hr.rule {
 
 .gift-letter {
   padding: 48px;
-  border-top: 4px solid var(--tumi-orange);
+  border-top: 4px solid var(--tumi-black);
   background: #fff;
   font-family: var(--font-display);
 }
@@ -861,12 +860,12 @@ hr.rule {
 }
 .fit-diagram .pocket {
   background: rgba(255,106,19,0.15);
-  border: 1px dashed var(--tumi-orange);
+  border: 1px dashed var(--tumi-black);
   display: flex; align-items: center; justify-content: center;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.2px; text-transform: uppercase;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   padding: 4px;
   text-align: center;
 }
@@ -901,9 +900,9 @@ body.edit-mode .img-swap {
   z-index: 5;
 }
 body.edit-mode .img-swap::after { opacity: 1; }
-body.edit-mode .img-swap:hover { outline: 2px solid var(--tumi-orange); outline-offset: -2px; }
+body.edit-mode .img-swap:hover { outline: 2px solid var(--tumi-black); outline-offset: -2px; }
 body.edit-mode .img-swap:hover::after {
-  background: var(--tumi-orange);
+  background: var(--tumi-black);
   opacity: 1;
 }
 
@@ -983,7 +982,7 @@ body.edit-mode .img-swap:hover::after {
   font-family: var(--font-body);
   font-size: 11px; font-weight: 600;
   letter-spacing: 4px; text-transform: uppercase;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   margin-bottom: 18px;
 }
 .index-hero h1 {
@@ -1041,7 +1040,7 @@ body.edit-mode .img-swap:hover::after {
   font-family: var(--font-display);
   font-size: 11px; font-weight: 700;
   letter-spacing: 1.5px;
-  color: var(--tumi-orange);
+  color: var(--tumi-black);
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -1068,7 +1067,7 @@ body.edit-mode .img-swap:hover::after {
   /* Topnav: hide nav items, keep logo + account */
   .tumi-nav { padding: 14px 16px; }
   .tumi-nav-items { display: none; }
-  .tumi-logo { font-size: 18px; letter-spacing: 3px; margin-right: 0; }
+  .tumi-logo { height: 18px; margin-right: 0; }
   .tumi-account { font-size: 11px; gap: 12px; }
 
   /* Hero: smaller, less padding */
