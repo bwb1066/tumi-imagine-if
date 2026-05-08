@@ -168,31 +168,115 @@ const stage = document.querySelector('.mockup-stage');
     }, true);
   }
 
+  /* ============================================================
+     IMAGE UPLOAD — writes uploaded images to the deck's images/ subfolder so the
+     saved HTML references images by path (small file) instead of inlining base64
+     (huge file, slow to load). Falls back to base64 if FS access isn't available.
+     ============================================================ */
+
+  // Cached handle for the deck's images/ subfolder. Per-tab; reuses dirHandle if
+  // Save-to-file was used first, otherwise prompts for the deck folder.
+  let imagesDirHandle = null;
+
+  async function getImagesDir() {
+    if (imagesDirHandle) return imagesDirHandle;
+    if (!window.showDirectoryPicker) return null;
+    if (!dirHandle) {
+      // No folder granted yet (Save to file hasn't run). Prompt now.
+      try {
+        showStatus('select your deck folder…', 'info');
+        dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+      } catch (e) {
+        return null;  // user cancelled or denied
+      }
+    }
+    try {
+      imagesDirHandle = await dirHandle.getDirectoryHandle('images', { create: true });
+      return imagesDirHandle;
+    } catch (e) {
+      console.error('Could not access images/:', e);
+      return null;
+    }
+  }
+
+  function pageSlug() {
+    const name = (location.pathname.split('/').pop() || 'page').replace(/\.html?$/i, '');
+    return name.replace(/[^a-z0-9-]+/gi, '-').toLowerCase();
+  }
+
+  function slotIndex(target) {
+    // 1-based index of the swap target among all .img-swap elements on the page.
+    // Stable across re-uploads (assuming page structure unchanged), so re-uploading
+    // the same slot overwrites the file rather than spawning duplicates.
+    const all = Array.from(document.querySelectorAll('.mockup-stage .img-swap'));
+    const idx = all.indexOf(target);
+    return idx >= 0 ? idx + 1 : 0;
+  }
+
+  function fileExtension(file) {
+    const m = (file.name || '').match(/\.([a-z0-9]+)$/i);
+    return m ? m[1].toLowerCase() : 'png';
+  }
+
+  async function writeImageFile(file, target) {
+    // Write to images/<page-slug>-<slot-index>.<ext>. Returns the relative path on
+    // success, or null on failure (caller falls back to base64).
+    const dir = await getImagesDir();
+    if (!dir) return null;
+    const filename = pageSlug() + '-' + slotIndex(target) + '.' + fileExtension(file);
+    try {
+      const fileHandle = await dir.getFileHandle(filename, { create: true });
+      const writable = await fileHandle.createWritable();
+      await writable.write(file);
+      await writable.close();
+      return 'images/' + filename;
+    } catch (e) {
+      console.error('Image write failed:', e);
+      return null;
+    }
+  }
+
+  function applyImageToTarget(target, src) {
+    if (target.tagName === 'IMG') {
+      target.src = src;
+    } else {
+      // Clear any placeholder content (SVG silhouettes, gradient overlays with text
+      // labels like the McLaren / Disney100 / 50 YEARS tiles, etc.). Without this,
+      // those children render ON TOP of the new background image and the user sees
+      // both — the bug originally shipped in v1.
+      target.innerHTML = '';
+      // Some placeholders set the gradient via inline `style="background: ..."`
+      // shorthand. Reset the shorthand before applying the image so background-color
+      // and other sub-properties don't fight the new image.
+      target.style.background = '';
+      target.style.backgroundImage = 'url("' + src + '")';
+      target.style.backgroundSize = 'cover';
+      target.style.backgroundPosition = 'center';
+    }
+  }
+
   function triggerImageUpload(target) {
     const input = document.createElement('input');
     input.type = 'file'; input.accept = 'image/*';
-    input.onchange = function () {
+    input.onchange = async function () {
       const f = input.files[0]; if (!f) return;
+      showStatus('saving image…', 'info');
+      // Preferred path: write the file to images/ and reference it by relative path.
+      // Keeps the saved HTML small (a few KB instead of base64-bloated MB).
+      const path = await writeImageFile(f, target);
+      if (path) {
+        applyImageToTarget(target, path);
+        saveState();
+        showStatus('saved → ' + path, 'success');
+        return;
+      }
+      // Fallback: inline base64 data URL. Heavier files but works everywhere — file://,
+      // no folder permission, Safari/Firefox without FS Access API support, etc.
       const r = new FileReader();
       r.onload = function (ev) {
-        const dataUrl = ev.target.result;
-        if (target.tagName === 'IMG') {
-          target.src = dataUrl;
-        } else {
-          // Clear any placeholder content (SVG silhouettes, gradient overlays with text
-          // labels like the McLaren / Disney100 / 50 YEARS tiles, etc.). Without this,
-          // those children render ON TOP of the new background image and the user sees
-          // both — the bug originally shipped in v1.
-          target.innerHTML = '';
-          // Some placeholders set the gradient via inline `style="background: ..."`
-          // shorthand. Reset the shorthand before applying the image so background-color
-          // and other sub-properties don't fight the new image.
-          target.style.background = '';
-          target.style.backgroundImage = 'url("' + dataUrl + '")';
-          target.style.backgroundSize = 'cover';
-          target.style.backgroundPosition = 'center';
-        }
+        applyImageToTarget(target, ev.target.result);
         saveState();
+        showStatus('embedded inline (no folder access)', 'warn');
       };
       r.readAsDataURL(f);
     };
