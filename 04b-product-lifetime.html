@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porter — Product lifetime detail</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="mockup-stage">
+    <p class="mockup-caption"><strong>4B</strong> — One product, its whole life with you. Trip log, service history, and what's coming.</p>
+    <div class="tumi-mock">
+<div class="tumi-nav">
+      <span class="tumi-logo">TUMI</span>
+      <div class="tumi-nav-items">
+        <a>New Arrivals</a>
+        <a>Travel</a>
+        <a>Business</a>
+        <a class="active">Bags</a>
+        <a>Accessories</a>
+        <a>Sale</a>
+      </div>
+      <div class="tumi-account">
+        <span>Sign in</span>
+        <span>Stores</span>
+        <span class="icon-cart">⌫</span>
+      </div>
+    </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border);">
+        <div class="img-swap" style="background: var(--bg-deep); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;">
+          <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg" style="width:60%;height:auto;">
+            <rect x="40" y="50" width="120" height="160" rx="8" fill="#9a9a9a" stroke="#6b6b6b" stroke-width="2"/>
+            <line x1="100" y1="50" x2="100" y2="210" stroke="#6b6b6b" stroke-width="1.5"/>
+            <rect x="80" y="40" width="40" height="14" rx="2" fill="#6b6b6b"/>
+            <circle cx="60" cy="220" r="6" fill="#1a1a1a"/>
+            <circle cx="140" cy="220" r="6" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div style="padding: 40px;">
+          <div class="product-line">19 Degree Aluminum</div>
+          <h2 style="font-family: var(--font-display); font-size: 28px; font-weight: 600; margin: 6px 0 8px; letter-spacing: -0.4px;">International Carry-On</h2>
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Yours since Sep 14, 2023 · Serial 19D-INT-7842-K</div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div>
+              <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px;">22</div>
+              <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px;">Trips</div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px;">89,400</div>
+              <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px;">Miles flown</div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px;">14</div>
+              <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px;">Countries</div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1; letter-spacing: -0.3px; color: var(--tumi-black);">2yr 1mo</div>
+              <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px;">Warranty left</div>
+            </div>
+          </div>
+
+          <button class="btn">Schedule maintenance</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-eyebrow">Trip log · most recent</div>
+        <h3 style="margin-bottom: 0;">22 trips, the long ones included.</h3>
+      </div>
+
+      <div class="trip-log">
+        <div class="trip-row">
+          <div class="date">Oct 18, 2025</div>
+          <div class="where">San Francisco → Tokyo (Haneda) → Bangkok → SFO</div>
+          <div class="miles">14,800 mi</div>
+        </div>
+        <div class="trip-row">
+          <div class="date">Sep 02, 2025</div>
+          <div class="where">JFK → London (Heathrow) → JFK</div>
+          <div class="miles">6,900 mi</div>
+        </div>
+        <div class="trip-row">
+          <div class="date">Jul 11, 2025</div>
+          <div class="where">JFK → Singapore → Hong Kong → JFK</div>
+          <div class="miles">19,200 mi</div>
+        </div>
+        <div class="trip-row">
+          <div class="date">May 04, 2025</div>
+          <div class="where">SFO → Mexico City → SFO</div>
+          <div class="miles">3,800 mi</div>
+        </div>
+        <div class="trip-row">
+          <div class="date">Mar 22, 2025</div>
+          <div class="where">JFK → Paris (CDG) → Milan → JFK</div>
+          <div class="miles">8,400 mi</div>
+        </div>
+      </div>
+
+      <div class="section" style="background: var(--bg-alt); border-top: 1px solid var(--border);">
+        <div class="section-eyebrow">Service history</div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px;">
+          <div>
+            <div style="font-family: var(--font-display); font-weight: 600; font-size: 14px; margin-bottom: 4px;">Wheel housings · suggested</div>
+            <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">At 89k miles. Rated 100k. Replace before Tokyo Dec 14. SoHo flagship — walk-in, 90 min, free under TUMI+.</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-display); font-weight: 600; font-size: 14px; margin-bottom: 4px;">Monogram refresh</div>
+            <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">Original M.J.W. patch is 2 years on. Free re-emboss with TUMI+ annual benefit. Schedule alongside the wheel service.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="porter-card">
+        <div class="porter-tag">Porter</div>
+        <p>If you're thinking about an upgrade, the 2026 19 Degree International ships in March with the new TSA-approved combination dial and a redesigned interior compression frame. Trade-in value of your current piece, factoring in age and condition: $620 toward the new one. I won't push it — your current carry-on is good for another 50,000 miles minimum. Just so the option is on the table.</p>
+      </div>
+    </div>
+  </div>
+  <script src="editor.js"></script>
+</body>
+</html>
